@@ -1,5 +1,6 @@
 package pl.zurawskipiotr97glitch.repositorieslister;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,10 +14,9 @@ public class RepositoriesListerApplication {
     }
 
     @Bean
-    RestClient restClient() {
+    RestClient restClient(@Value("${github.api.url:https://api.github.com}") String githubApiUrl) {
         return RestClient.builder()
-                .baseUrl("https://api.github.com")
+                .baseUrl(githubApiUrl)
                 .build();
     }
-
 }

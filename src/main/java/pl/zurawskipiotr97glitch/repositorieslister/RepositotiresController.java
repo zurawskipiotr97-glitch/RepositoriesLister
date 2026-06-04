@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class RepositotiresController {
+class RepositotiresController {
 
     private final RepositoriesService repositoriesService;
 
-    public RepositotiresController(RepositoriesService repositoriesService) {
+   RepositotiresController(RepositoriesService repositoriesService) {
         this.repositoriesService = repositoriesService;
     }
 
