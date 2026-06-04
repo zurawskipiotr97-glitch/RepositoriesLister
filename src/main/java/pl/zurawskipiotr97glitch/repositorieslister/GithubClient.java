@@ -22,6 +22,13 @@ class GithubClient {
                 .body(new ParameterizedTypeReference<>() {});
     }
 
+    List<GithubBranch> getBranches(String owner, String repositoryName) {
+        return restClient.get()
+                .uri("/repos/{owner}/{repositoryName}/branches", owner, repositoryName)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {});
+    }
+
     record GithubRepository(
             String name,
             boolean fork,
@@ -31,6 +38,17 @@ class GithubClient {
 
     record GithubOwner(
             String login
+    ) {
+    }
+
+    record GithubBranch(
+            String name,
+            GithubCommit commit
+    ) {
+    }
+
+    record GithubCommit(
+            String sha
     ) {
     }
 }

@@ -17,11 +17,22 @@ class RepositoriesService {
         return githubClient.getRepositories(username)
                 .stream()
                 .filter(repository -> !repository.fork())
-                .map(repository -> new Repository(
-                        repository.name(),
-                        repository.owner().login(),
-                        List.of()
-                ))
+                .map(repository -> {
+                    List<Branch> branches = githubClient
+                            .getBranches(repository.owner().login(), repository.name())
+                            .stream()
+                            .map(branch -> new Branch(
+                                    branch.name(),
+                                    branch.commit().sha()
+                            ))
+                            .toList();
+
+                    return new Repository(
+                            repository.name(),
+                            repository.owner().login(),
+                            branches
+                    );
+                })
                 .toList();
     }
 }
